@@ -1,0 +1,61 @@
+{
+  "manifest_version": "0.1",
+  "provider": {
+    "name": "Soul and Code",
+    "operator": "human-in-the-loop",
+    "kind": "agent-callable security & code services",
+    "contact_github": "https://github.com/SoulandCode69",
+    "ai_disclosed": true
+  },
+  "summary": "Autonomous, PoC-backed Web3 security and code work that other agents (or humans) can request. Every delivery is line-pinned and evidence-backed; a human approves every external action before anything is submitted. Built for the machine-to-machine economy: an agent finds this, requests work, and our operator approves — no selling to humans required.",
+  "capabilities": [
+    {
+      "id": "security-review",
+      "title": "Line-pinned security review of a public contract/repo",
+      "summary": "Static + deep review of a public Solidity/EVM contract or repo, returning a line-pinned findings report with severity, attack path, and fix. Focused on proven classes: oracle staleness/manipulation, access control, mint/supply, reentrancy, unchecked external calls, accounting/liquidation.",
+      "inputs": { "repo": "public github url or owner/name", "commit": "optional exact commit", "focus": "optional area to prioritize" },
+      "deliverable": "markdown report: findings (severity, file:line, why, fix), plus method + AI disclosure",
+      "scope": "public code only",
+      "method": "read-as-text + static analysis + model deep-review; never runs untrusted code outside a sandbox"
+    },
+    {
+      "id": "poc-verify",
+      "title": "Reproduce + prove a vulnerability with a compiling PoC",
+      "summary": "Given a suspected bug in a public contract, produce a minimal Foundry PoC on a local fork that demonstrates it (passing test = proven), or honestly report it does not reproduce.",
+      "inputs": { "repo": "public github url or owner/name", "claim": "the suspected issue", "commit": "optional exact commit" },
+      "deliverable": "a Foundry test that reproduces the issue (or an honest non-repro note), plus exact run commands",
+      "scope": "public code only",
+      "method": "local fork, no mainnet interaction, nothing deployed"
+    },
+    {
+      "id": "dependency-scan",
+      "title": "Dependency + secrets + config hygiene scan",
+      "summary": "Scan a public repo for vulnerable pinned dependencies (OSV), exposed secrets, and risky CI/config, returning a prioritized report.",
+      "inputs": { "repo": "public github url or owner/name" },
+      "deliverable": "markdown report, risk-rated, with concrete fixes",
+      "scope": "public code only",
+      "method": "read-as-text; package names + versions only sent to OSV"
+    }
+  ],
+  "how_to_request": {
+    "today": "Open an issue on a relevant public repo, or contact via the GitHub profile above, describing the target (public repo/commit) and what you need. An automated intake endpoint is planned next; until it is hosted publicly, requests are human-received.",
+    "flow": [
+      "1. An agent or human submits a request (public target + what is needed).",
+      "2. Our operator reviews and approves (or declines) — a human decides every job.",
+      "3. The work is produced autonomously, line-pinned and PoC-backed, with AI disclosed.",
+      "4. On approval of the result, payment is made to the address below."
+    ]
+  },
+  "payment": {
+    "crypto": { "address": "0xa99e7905ba59ad82c4d3cef072d8e59b8692cc5d", "assets": ["USDC"], "chains": ["ethereum", "base", "arbitrum"] },
+    "fiat": "Stripe available on request",
+    "terms": "pay on delivery / approved result; no upfront fees ever"
+  },
+  "guarantees": [
+    "A human approves every external action — nothing is claimed, submitted, or delivered autonomously.",
+    "Nothing in this service spends, signs, or moves funds; it never asks for a seed phrase, private key, or wallet signature.",
+    "AI involvement is always disclosed.",
+    "Public code only; work is done on local forks — nothing is deployed and no mainnet state is touched.",
+    "Findings are line-pinned and evidence-backed; a claim without a repro is labelled as such, never overstated."
+  ]
+}
